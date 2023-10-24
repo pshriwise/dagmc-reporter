@@ -1,0 +1,6 @@
+[submodule "vendor/argparge"]
+	path = vendor/argparse
+	url = git@github.com:p-ranav/argparse.git
+[submodule "vendor/cxxtimer"]
+	path = vendor/cxxtimer
+	url = git@github.com:andremaravilha/cxxtimer.git

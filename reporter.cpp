@@ -2,7 +2,7 @@
 
 #include "DagMC.hpp"
 #include "argparse/argparse.hpp"
-
+#include "cxxtimer.hpp"
 
 double prn() {
   return (double) std::rand() / (double)RAND_MAX;
@@ -81,12 +81,17 @@ int main(int argc, char** argv) {
   moab::EntityHandle result;
 
   // perform a bunch of find volme queries. This has the effect of randomly sampling ray fires throughout the model
+  cxxtimer::Timer timer;
+  timer.start();
   for (int i = 0; i < n_samples; i++) {
     double xyz[3] = {lower_left[0] + (upper_right[0] - lower_left[0]) * prn(),
                      lower_left[1] + (upper_right[1] - lower_left[1]) * prn(),
                      lower_left[2] + (upper_right[2] - lower_left[2]) * prn()};
     dag.find_volume(xyz, result);
   }
+  timer.stop();
+  auto time = timer.count();
+  std::cout << "Ray fire time: " << time << "ms (" << ((double)n_samples) / time * 1000. <<" rays/s)" << std::endl;
 
 
   return 0;
